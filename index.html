@@ -1,0 +1,398 @@
+<!doctype html>
+<html lang="en" class="no-js">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+  <title>Resonance — hi-res music player for Windows</title>
+  <meta name="description" content="Resonance is a free hi-res music player for Windows 10 and 11: a 64-bit float engine, WASAPI exclusive and ASIO output, bit-perfect playback and a signal path that tells the truth.">
+  <meta name="color-scheme" content="dark">
+  <meta name="theme-color" content="#0E0F12">
+
+  <!-- Open Graph / social -->
+  <meta property="og:url" content="https://senthamizhanr.github.io/resonance/">
+  <link rel="canonical" href="https://senthamizhanr.github.io/resonance/">
+  <meta property="og:type" content="website">
+  <meta property="og:title" content="Resonance — every bit, as it was recorded">
+  <meta property="og:description" content="A free hi-res music player for Windows 10 and 11. 64-bit float engine, WASAPI exclusive and ASIO, bit-perfect playback.">
+  <meta property="og:image" content="https://senthamizhanr.github.io/resonance/assets/og-image.jpg">
+  <meta property="og:image:width" content="1200">
+  <meta property="og:image:height" content="630">
+  <meta property="og:image:alt" content="Resonance Now Playing: an abstract orange and blue album cover with transport controls and a signal-path readout">
+  <meta name="twitter:card" content="summary_large_image">
+
+  <link rel="icon" href="assets/brand-mark.svg" type="image/svg+xml">
+  <link rel="icon" href="assets/Resonance.ico" sizes="any">
+  <link rel="apple-touch-icon" href="assets/apple-touch-icon.png">
+
+  <!-- Self-hosted type (SIL OFL 1.1, licences in assets/fonts/) -->
+  <link rel="preload" href="assets/fonts/fraunces-vf.woff2" as="font" type="font/woff2" crossorigin>
+  <link rel="preload" href="assets/fonts/fraunces-vf-italic.woff2" as="font" type="font/woff2" crossorigin>
+  <link rel="preload" href="assets/fonts/hanken-grotesk-vf.woff2" as="font" type="font/woff2" crossorigin>
+  <link rel="stylesheet" href="styles.css">
+  <script>document.documentElement.classList.replace('no-js', 'js');</script>
+  <script src="app.js" defer></script>
+</head>
+<body>
+  <svg width="0" height="0" class="sprite" aria-hidden="true" focusable="false">
+    <symbol id="i-download" viewBox="0 0 24 24"><path d="M12 4v11m0 0-4.5-4.5M12 15l4.5-4.5M5 19.5h14"/></symbol>
+    <symbol id="i-copy" viewBox="0 0 24 24"><rect x="8" y="8" width="12" height="12" rx="2.5"/><path d="M16 8V6a2 2 0 0 0-2-2H6a2 2 0 0 0-2 2v8a2 2 0 0 0 2 2h2"/></symbol>
+    <symbol id="i-check" viewBox="0 0 24 24"><path d="m5 12.5 4.5 4.5L19 7.5"/></symbol>
+    <symbol id="i-info" viewBox="0 0 24 24"><circle cx="12" cy="12" r="9"/><path d="M12 11v5.5M12 7.6v.2"/></symbol>
+    <symbol id="i-menu" viewBox="0 0 24 24"><path d="M4 8h16M4 16h11"/></symbol>
+    <symbol id="i-close" viewBox="0 0 24 24"><path d="m6 6 12 12M18 6 6 18"/></symbol>
+    <symbol id="i-bitperfect" viewBox="0 0 24 24"><path d="M3 12c2-4 4-4 6 0s4 4 6 0" opacity=".45"/><path d="m6 13 4 4 9-10"/></symbol>
+  </svg>
+
+  <a class="skip-link" href="#main">Skip to content</a>
+
+  <!-- Gradient shared by the signal-path wire (the scroll-drawn thread was removed) -->
+  <svg class="thread" aria-hidden="true" focusable="false" width="0" height="0"><defs>
+    <linearGradient id="thread-grad" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#7B3FF2"/><stop offset=".55" stop-color="#C04BC0"/><stop offset="1" stop-color="#F2557A"/></linearGradient>
+  </defs></svg>
+
+  <header class="masthead">
+    <div class="wrap masthead-inner">
+      <a class="wordmark" href="#top" aria-label="Resonance, back to top">
+        <img src="assets/brand-mark.svg" width="30" height="30" alt="">
+        <span>Resonance</span>
+      </a>
+      <span class="catno mono" aria-hidden="true">RSN&#8209;040 · <span data-version>0.4.0</span></span>
+
+      <nav class="nav" aria-label="Primary">
+        <button class="menu-toggle" type="button" aria-expanded="false" aria-controls="nav-list">
+          <svg class="icon icon-open" aria-hidden="true"><use href="#i-menu"/></svg>
+          <svg class="icon icon-close" aria-hidden="true"><use href="#i-close"/></svg>
+          <span class="menu-label">Index</span>
+        </button>
+        <ol id="nav-list" class="nav-list">
+          <li><a href="#tracklist"><span class="mono">01</span> Tracklist</a></li>
+          <li><a href="#signal"><span class="mono">02</span> Signal</a></li>
+          <li><a href="#room"><span class="mono">03</span> Room</a></li>
+          <li><a href="#visualizers"><span class="mono">04</span> Visuals</a></li>
+          <li><a href="#library"><span class="mono">05</span> Library</a></li>
+          <li><a href="#download"><span class="mono">06</span> Download</a></li>
+        </ol>
+      </nav>
+
+      <a class="btn btn-solid btn-sm masthead-cta" href="https://github.com/senthamizhanR/resonance/releases/download/v0.4.0/Resonance-Setup-0.4.0.exe" data-download download>
+        <svg class="icon" aria-hidden="true"><use href="#i-download"/></svg>Get it
+      </a>
+    </div>
+  </header>
+
+  <main id="main">
+    <!-- ======================= HERO ======================= -->
+    <section class="hero" id="top" aria-labelledby="hero-title">
+      <canvas class="hero-canvas" aria-hidden="true"></canvas>
+      <div class="grain" aria-hidden="true"></div>
+
+      <div class="wrap hero-grid">
+        <p class="hero-kicker mono"><span>Side A</span> A hi-res music player for Windows</p>
+        <!--
+          Headline alternatives (the first is in use):
+            1. "Every bit, as it was recorded."
+            2. "Hear exactly what's on the record."
+            3. "Your music. Nothing in the way."
+        -->
+        <h1 id="hero-title" class="hero-title">
+          <span class="ht-1">Every bit,</span>
+          <span class="ht-2"><em>as it was</em></span>
+          <span class="ht-3">recorded<span class="ht-dot">.</span></span>
+        </h1>
+
+        <div class="hero-note">
+          <p class="lede">Resonance is a free player for people who care what reaches their ears. A <b>64-bit float</b> engine, <b>bit-perfect</b> output when your device allows it, and a quiet window where the album art is the only colour.</p>
+          <div class="cta">
+            <a class="btn btn-solid btn-lg" href="https://github.com/senthamizhanR/resonance/releases/download/v0.4.0/Resonance-Setup-0.4.0.exe" data-download download>
+              <svg class="icon" aria-hidden="true"><use href="#i-download"/></svg>
+              Download for Windows
+            </a>
+            <p class="cta-meta mono"><span>v<span data-version>0.4.0</span></span> <span><span data-size>98.1 MB</span></span> <span>Windows 10/11 · x64</span> <span>Free</span></p>
+            <p class="os-note" role="status" hidden><svg class="icon" aria-hidden="true"><use href="#i-info"/></svg><span class="os-note-text"></span></p>
+          </div>
+        </div>
+
+        <figure class="hero-shot">
+          <img src="assets/shots/now-playing-1440.webp"
+               srcset="assets/shots/now-playing-720.webp 720w, assets/shots/now-playing-1440.webp 1440w"
+               sizes="(min-width: 1100px) 62vw, 94vw" width="1440" height="920" fetchpriority="high"
+               alt="Resonance Now Playing: an orange and blue abstract cover for “Lowland Static” by Oshiro &amp; Vell, transport controls, and the signal path FLAC 24/48 to WASAPI Shared.">
+          <figcaption class="mono"><span>Fig. 1</span> Now Playing — “Lowland Static”, Oshiro &amp; Vell <span class="demo-tag">demo library</span></figcaption>
+        </figure>
+        <span class="gonio-anchor" aria-hidden="true"></span>
+      </div>
+    </section>
+
+    <!-- ======================= TRACKLIST ======================= -->
+    <section class="tracklist-sec" id="tracklist" aria-labelledby="tracklist-title">
+      <div class="wrap">
+        <header class="sec-head sec-head--offset">
+          <p class="mono eyebrow">01 / Tracklist</p>
+          <h2 id="tracklist-title">Eleven reasons, <em>in running order.</em></h2>
+        </header>
+
+        <div class="sides">
+          <div class="side">
+            <h3 class="side-title"><span class="mono">Side A</span> The engine</h3>
+            <ol class="tracks">
+              <li><span class="t-no mono">A1</span><span class="t-name">In-process FFmpeg decoding</span><span class="t-lead" aria-hidden="true"></span><span class="t-tag mono">FFmpeg 8.1</span><span class="t-desc">No external codecs and no helper processes.</span></li>
+              <li><span class="t-no mono">A2</span><span class="t-name">A 64-bit float pipeline</span><span class="t-lead" aria-hidden="true"></span><span class="t-tag mono">f64</span><span class="t-desc">Every stage, from decode to output, in double precision.</span></li>
+              <li><span class="t-no mono">A3</span><span class="t-name">WASAPI shared and exclusive, plus ASIO</span><span class="t-lead" aria-hidden="true"></span><span class="t-tag mono">3 paths</span><span class="t-desc">Pick the route to your DAC.</span></li>
+              <li><span class="t-no mono">A4</span><span class="t-name">Bit-perfect, when the device allows</span><span class="t-lead" aria-hidden="true"></span><span class="t-tag mono t-ok">bit-perfect</span><span class="t-desc">And a readout that only says so when it’s true.</span></li>
+              <li><span class="t-no mono">A5</span><span class="t-name">Gapless playback, sample-accurate seeking</span><span class="t-lead" aria-hidden="true"></span><span class="t-tag mono">gapless</span><span class="t-desc">Live albums and continuous mixes flow on.</span></li>
+              <li><span class="t-no mono">A6</span><span class="t-name">FLAC, ALAC, WAV, AIFF, DSD, MP3, AAC</span><span class="t-lead" aria-hidden="true"></span><span class="t-tag mono">7 formats</span><span class="t-desc">DSD plays as PCM.</span></li>
+            </ol>
+          </div>
+          <div class="side side--b">
+            <h3 class="side-title"><span class="mono">Side B</span> The sound</h3>
+            <ol class="tracks">
+              <li><span class="t-no mono">B1</span><span class="t-name">10-band graphic, 20-band parametric EQ</span><span class="t-lead" aria-hidden="true"></span><span class="t-tag mono">11 presets</span><span class="t-desc">Plus AutoEQ and EqualizerAPO import.</span></li>
+              <li><span class="t-no mono">B2</span><span class="t-name">Room correction</span><span class="t-lead" aria-hidden="true"></span><span class="t-tag mono">FIR</span><span class="t-desc">Load an impulse; it’s applied by convolution.</span></li>
+              <li><span class="t-no mono">B3</span><span class="t-name">Loudness normalisation and a true-peak limiter</span><span class="t-lead" aria-hidden="true"></span><span class="t-tag mono">EBU R128</span><span class="t-desc">Even levels without clipping.</span></li>
+              <li><span class="t-no mono">B4</span><span class="t-name">TPDF or noise-shaped dither</span><span class="t-lead" aria-hidden="true"></span><span class="t-tag mono">dither</span><span class="t-desc">When the output needs fewer bits than the pipeline.</span></li>
+              <li><span class="t-no mono">B5</span><span class="t-name">Per-device sound profiles</span><span class="t-lead" aria-hidden="true"></span><span class="t-tag mono">per device</span><span class="t-desc">Headphones and speakers keep their own settings.</span></li>
+            </ol>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- ======================= SIGNAL ======================= -->
+    <section class="signal-sec" id="signal" aria-labelledby="signal-title">
+      <div class="wrap">
+        <div class="signal-head">
+          <p class="mono eyebrow">02 / Signal</p>
+          <h2 id="signal-title">If anything touches the sound, <em>it says so.</em></h2>
+          <p class="signal-copy">One line in Now Playing tells you exactly what reaches the device. Stages appear only while they’re active, and <span class="ok">Bit-perfect</span> appears only when nothing alters a single sample.</p>
+        </div>
+
+        <figure class="flow" aria-labelledby="flow-cap">
+          <ol class="flow-nodes">
+            <li class="node"><span class="node-k mono">source</span><span class="node-v">FLAC 24/96</span></li>
+            <li class="node"><span class="node-k mono">decode</span><span class="node-v">f64</span></li>
+            <li class="node node--ghost"><span class="node-k mono">only if on</span><span class="node-v">EQ · room · loudness · spatial · volume</span></li>
+            <li class="node"><span class="node-k mono">output</span><span class="node-v">WASAPI Exclusive 24/96</span></li>
+            <li class="node node--ok"><span class="node-k mono">verdict</span><span class="node-v"><svg class="icon" aria-hidden="true"><use href="#i-bitperfect"/></svg>Bit-perfect</span></li>
+          </ol>
+          <svg class="flow-wire" aria-hidden="true" preserveAspectRatio="none" viewBox="0 0 1000 40"><path d="M0 20 C 120 20, 140 6, 250 6 S 380 34, 500 34 S 640 6, 750 6 S 880 20, 1000 20"/><path class="pulse" pathLength="1000" d="M0 20 C 120 20, 140 6, 250 6 S 380 34, 500 34 S 640 6, 750 6 S 880 20, 1000 20"/></svg>
+          <figcaption id="flow-cap" class="mono">As it reads in the app: <code>FLAC 24/96 → decode f64 → WASAPI Exclusive 24/96 · Bit-perfect</code></figcaption>
+        </figure>
+      </div>
+    </section>
+
+    <!-- ======================= SPREAD: ALBUM ======================= -->
+    <section class="spread" aria-labelledby="spread-title">
+      <div class="wrap spread-grid">
+        <p class="spread-word" aria-hidden="true">Listen<span>.</span></p>
+        <div class="spread-text">
+          <h2 id="spread-title">The art is the only colour <em>on screen.</em></h2>
+          <p>A native WinUI 3 app in quiet, translucent glass. Albums open onto their own artwork; the chrome steps back. Nothing bounces for decoration.</p>
+        </div>
+        <figure class="spread-shot">
+          <img src="assets/shots/album-1440.webp" srcset="assets/shots/album-720.webp 720w, assets/shots/album-1440.webp 1440w"
+               sizes="(min-width: 1000px) 70vw, 100vw" width="1440" height="920" loading="lazy" decoding="async"
+               alt="An album page for “Lowland Static” by Oshiro &amp; Vell: the cover on a backdrop tinted by its colours, Play and Shuffle, and three tracks marked 24/48.">
+          <figcaption class="mono"><span>Fig. 2</span> Album page</figcaption>
+        </figure>
+      </div>
+    </section>
+
+    <!-- ======================= ROOM: SOUND + SPATIAL ======================= -->
+    <section class="room" id="room" aria-labelledby="room-title">
+      <div class="wrap room-grid">
+        <header class="room-head">
+          <p class="mono eyebrow">03 / Room</p>
+          <h2 id="room-title">Shape it. Then hear it <em>in the room.</em></h2>
+        </header>
+        <figure class="room-shot room-shot--a">
+          <img src="assets/shots/sound-1440.webp" srcset="assets/shots/sound-720.webp 720w, assets/shots/sound-1440.webp 1440w"
+               sizes="(min-width: 1000px) 58vw, 100vw" width="1440" height="920" loading="lazy" decoding="async"
+               alt="The Sound page: a 10-band graphic equalizer with its response curve and preamp.">
+          <figcaption class="mono"><span>Fig. 3</span> Equalizer</figcaption>
+        </figure>
+        <figure class="room-shot room-shot--b">
+          <img src="assets/shots/spatial-1440.webp" srcset="assets/shots/spatial-720.webp 720w, assets/shots/spatial-1440.webp 1440w"
+               sizes="(min-width: 1000px) 44vw, 100vw" width="1440" height="920" loading="lazy" decoding="async"
+               alt="The Spatial card set to virtual speakers, above the Output card with its signal path and level meters.">
+          <figcaption class="mono"><span>Fig. 4</span> Spatial and output</figcaption>
+        </figure>
+        <div class="room-copy">
+          <p class="runin"><b>Headphones,</b> meet the speakers you don’t have. Crossfeed in three flavours <span class="mono sep">/</span> Bauer, Chu Moy and Meier. Binaural rendering of 5.1 and 7.1 through an HRTF after Brown &amp; Duda (1998), generated in the app. Virtual speakers at the angle you choose. Stereo width. And an ITU fold-down when a surround file meets a stereo device.</p>
+        </div>
+      </div>
+    </section>
+
+    <!-- ======================= VISUALIZERS ======================= -->
+    <section class="viz" id="visualizers" aria-labelledby="viz-title">
+      <div class="wrap">
+        <header class="viz-head">
+          <p class="mono eyebrow">04 / Visuals</p>
+          <h2 id="viz-title">See it, <em>measured.</em></h2>
+          <p>Four instruments drawn at display rate. They take the artwork’s place in Now Playing when you want them.</p>
+        </header>
+        <div class="contact">
+          <figure class="c c1">
+            <img src="assets/shots/visualizer-spectrum-1440.webp" srcset="assets/shots/visualizer-spectrum-720.webp 720w, assets/shots/visualizer-spectrum-1440.webp 1440w"
+                 sizes="(min-width: 900px) 60vw, 100vw" width="1440" height="920" loading="lazy" decoding="async" alt="Spectrum visualizer: log-spaced bars with peak caps, coloured from the album art.">
+            <figcaption><span class="mono">01</span> Spectrum <small>72 log bands, peak caps</small></figcaption>
+          </figure>
+          <figure class="c c2">
+            <img src="assets/shots/visualizer-spectrogram-720.webp" width="720" height="460" loading="lazy" decoding="async" alt="Spectrogram visualizer in the inferno colour map, with frequency guides.">
+            <figcaption><span class="mono">02</span> Spectrogram <small>100 / 1k / 10k guides</small></figcaption>
+          </figure>
+          <figure class="c c3">
+            <img src="assets/shots/visualizer-meters-720.webp" width="720" height="460" loading="lazy" decoding="async" alt="Meters visualizer: left and right RMS bars over peak with hold markers.">
+            <figcaption><span class="mono">03</span> VU / peak <small>RMS over peak, hold</small></figcaption>
+          </figure>
+          <figure class="c c4">
+            <img src="assets/shots/visualizer-stereo-720.webp" width="720" height="460" loading="lazy" decoding="async" alt="Stereo visualizer: a goniometer trace with a correlation bar.">
+            <figcaption><span class="mono">04</span> Goniometer <small>−1…+1 correlation</small></figcaption>
+          </figure>
+        </div>
+      </div>
+    </section>
+
+    <!-- ======================= LIBRARY & LYRICS ======================= -->
+    <section class="library" id="library" aria-labelledby="library-title">
+      <div class="wrap lib-grid">
+        <header class="lib-head">
+          <p class="mono eyebrow">05 / Library</p>
+          <h2 id="library-title">Your collection, <em>kept close.</em></h2>
+        </header>
+
+        <blockquote class="lyric" cite="#lyrics-fig">
+          <p><span class="dim">Paper wings above the frozen field</span><br>Holding on to what the wind won’t yield<br><span class="dim">Every string a word I didn’t say</span></p>
+          <footer class="mono">“Kites in December”, Fenna Arrowood · synced from an .lrc file</footer>
+        </blockquote>
+
+        <figure class="lib-shot lib-shot--lyrics" id="lyrics-fig">
+          <img src="assets/shots/lyrics-1440.webp" srcset="assets/shots/lyrics-720.webp 720w, assets/shots/lyrics-1440.webp 1440w"
+               sizes="(min-width: 1000px) 50vw, 100vw" width="1440" height="920" loading="lazy" decoding="async"
+               alt="Synced lyrics in Now Playing: the current line in white, its neighbours dimmed, and a caption reading Synced · LRC file.">
+        </figure>
+
+        <ul class="index-list">
+          <li><span class="mono">i.</span> <span>A fast, incremental scan, and folders that are watched for changes.</span></li>
+          <li><span class="mono">ii.</span> <span>Albums, artists, genres and songs, with search across them.</span></li>
+          <li><span class="mono">iii.</span> <span>Synced lyrics from .lrc files and tags. <b>Never fetched online.</b></span></li>
+          <li><span class="mono">iv.</span> <span>Playlists, smart playlists that follow rules, and M3U8.</span></li>
+          <li><span class="mono">v.</span> <span>A queue that is still there after a restart.</span></li>
+        </ul>
+
+        <figure class="lib-shot lib-shot--home">
+          <img src="assets/shots/home-720.webp" srcset="assets/shots/home-720.webp 720w, assets/shots/home-1440.webp 1440w"
+               sizes="(min-width: 1000px) 40vw, 100vw" width="1440" height="920" loading="lazy" decoding="async"
+               alt="The Home page: a Recently Added row of five abstract album covers, a Hi-Res Lossless shelf below it, and a track playing in the player bar.">
+          <figcaption class="mono"><span>Fig. 5</span> Home</figcaption>
+        </figure>
+        <figure class="lib-shot lib-shot--pl">
+          <img src="assets/shots/playlists-720.webp" srcset="assets/shots/playlists-720.webp 720w, assets/shots/playlists-1440.webp 1440w"
+               sizes="(min-width: 1000px) 30vw, 100vw" width="1440" height="920" loading="lazy" decoding="async"
+               alt="The Playlists page: a cover-mosaic tile for Late night and two smart playlists, Hi-Res and Slow Sunday.">
+          <figcaption class="mono"><span>Fig. 6</span> Playlists</figcaption>
+        </figure>
+      </div>
+    </section>
+
+    <!-- ======================= WINDOWS ======================= -->
+    <section class="windows" aria-labelledby="windows-title">
+      <div class="wrap win-grid">
+        <h2 id="windows-title" class="win-title">At home <em>on Windows.</em></h2>
+        <dl class="win-list">
+          <div><dt><span class="mono">W1</span> Media overlay &amp; keys</dt><dd>What’s playing, with its artwork, in the Windows media flyout. Hardware media keys just work.</dd></div>
+          <div><dt><span class="mono">W2</span> Taskbar buttons</dt><dd>Previous, play/pause and next on the thumbnail.</dd></div>
+          <div><dt><span class="mono">W3</span> Jump list</dt><dd>Right-click the taskbar icon for quick actions.</dd></div>
+          <div><dt><span class="mono">W4</span> Verified updates</dt><dd>The in-app updater checks every installer’s SHA-256 before it runs.</dd></div>
+        </dl>
+        <figure class="win-shot">
+          <img src="assets/shots/windows-settings-720.webp" srcset="assets/shots/windows-settings-720.webp 720w, assets/shots/windows-settings-1440.webp 1440w"
+               sizes="(min-width: 1000px) 40vw, 100vw" width="1440" height="920" loading="lazy" decoding="async"
+               alt="Settings: the demo music folder, and the Windows toggles for media overlay and keys, track-change notifications and restoring the queue.">
+        </figure>
+      </div>
+    </section>
+
+    <!-- ======================= DOWNLOAD: SLEEVE ======================= -->
+    <section class="download" id="download" aria-labelledby="download-title">
+      <div class="wrap dl-grid">
+        <div class="record" aria-hidden="true">
+          <div class="disc"><span class="disc-label"><span class="mono">RSN-040</span><span>Resonance</span><span class="mono">33⅓ · v0.4.0</span></span></div>
+          <div class="sleeve">
+            <img src="assets/brand-mark.svg" width="120" height="120" alt="">
+            <span class="sleeve-title">Resonance</span>
+            <span class="sleeve-sub mono">Hi-res music player · Windows</span>
+          </div>
+        </div>
+
+        <div class="dl-info">
+          <p class="mono eyebrow">06 / Download</p>
+          <h2 id="download-title">Take it home.</h2>
+          <p class="dl-sub">Free. Version <span data-version>0.4.0</span>, for Windows 10 and 11 on x64.</p>
+
+          <a class="btn btn-solid btn-xl" href="https://github.com/senthamizhanR/resonance/releases/download/v0.4.0/Resonance-Setup-0.4.0.exe" data-download download>
+            <svg class="icon" aria-hidden="true"><use href="#i-download"/></svg>
+            <span>Download <span class="nowrap">Resonance-Setup-<span data-version>0.4.0</span>.exe</span></span>
+          </a>
+          <p class="cta-meta mono"><span data-size>98.1 MB</span> <span>Windows 10/11 · x64</span> <span>No admin rights</span></p>
+          <p class="os-note" role="status" hidden><svg class="icon" aria-hidden="true"><use href="#i-info"/></svg><span class="os-note-text"></span></p>
+
+          <div class="hash">
+            <p class="mono hash-k" id="sha-label">SHA-256</p>
+            <div class="hash-row">
+              <code id="sha256" aria-labelledby="sha-label">c4ac84117b65a674655ca6e43a2c841fcee2b1cb4e2a283499a9cc3f44733f12</code>
+              <button class="btn btn-ghost copy-btn" type="button" data-copy-target="sha256">
+                <svg class="icon icon-copy" aria-hidden="true"><use href="#i-copy"/></svg>
+                <svg class="icon icon-check" aria-hidden="true"><use href="#i-check"/></svg>
+                <span class="copy-label">Copy</span>
+              </button>
+            </div>
+            <p class="hash-hint">Check it in PowerShell: <code>Get-FileHash .\Resonance-Setup-0.4.0.exe</code></p>
+            <p class="visually-hidden" aria-live="polite" id="copy-status"></p>
+          </div>
+
+          <dl class="specs">
+            <div><dt class="mono">Requires</dt><dd>Windows 10 version 2004 (build 19041) or later, or Windows 11, on a 64-bit PC.</dd></div>
+            <div><dt class="mono">Output</dt><dd>Any WASAPI device; an ASIO driver for ASIO.</dd></div>
+            <div><dt class="mono">Installs</dt><dd>Per user, for your account only. No admin rights needed.</dd></div>
+          </dl>
+
+          <p class="smartscreen"><b>Windows SmartScreen may warn you</b> because the installer isn’t code-signed yet. Choose <b>More info</b>, then <b>Run anyway</b>. Compare the SHA-256 above first if you’d like to be sure.</p>
+        </div>
+      </div>
+    </section>
+  </main>
+
+  <!-- ======================= LINER NOTES ======================= -->
+  <footer class="liner">
+    <div class="wrap liner-grid">
+      <div class="liner-about">
+        <p class="liner-mark"><img src="assets/brand-mark.svg" width="44" height="44" alt=""><span>Resonance</span></p>
+        <h2 class="visually-hidden">About</h2>
+        <p>Resonance is a hi-res music player for Windows, built as a listening room rather than a file manager. It exists because a player should tell you what it’s doing to your music, and otherwise get out of the way. Your library stays on your PC, and lyrics never come from the internet.</p>
+        <!-- Author line: change it here only. -->
+        <p class="author" id="author">Made by <a href="https://github.com/senthamizhanR" rel="author">Senthamizhan R</a></p>
+      </div>
+
+      <section class="liner-credits" aria-labelledby="credits-title">
+        <h2 id="credits-title" class="mono">Liner notes</h2>
+        <dl class="credits">
+          <div><dt>Decoding</dt><dd><a href="https://ffmpeg.org/">FFmpeg 8.1</a> (<a href="https://www.gnu.org/licenses/old-licenses/lgpl-2.1.html">LGPL 2.1</a>, <a href="https://github.com/BtbN/FFmpeg-Builds">BtbN builds</a>) · <a href="https://github.com/Ruslan-B/FFmpeg.AutoGen">FFmpeg.AutoGen</a></dd></div>
+          <div><dt>ASIO host</dt><dd><a href="https://github.com/naudio/NAudio">NAudio</a></dd></div>
+          <div><dt>Visualizers</dt><dd><a href="https://github.com/microsoft/Win2D">Win2D</a></dd></div>
+          <div><dt>Interface</dt><dd><a href="https://github.com/microsoft/WindowsAppSDK">Windows App SDK / WinUI 3</a> · <a href="https://github.com/CommunityToolkit/dotnet">CommunityToolkit.Mvvm</a></dd></div>
+          <div><dt>Runtime</dt><dd><a href="https://dotnet.microsoft.com/">.NET 8</a></dd></div>
+          <div><dt>Installer</dt><dd><a href="https://jrsoftware.org/isinfo.php">Inno Setup</a></dd></div>
+          <div><dt>Glyphs</dt><dd><a href="https://learn.microsoft.com/windows/apps/design/style/segoe-fluent-icons-font">Segoe Fluent Icons</a> (Microsoft)</dd></div>
+          <div><dt>HRTF</dt><dd>After <a href="https://doi.org/10.1109/89.709670">Brown &amp; Duda (1998)</a>, generated in-app (CC0)</dd></div>
+          <div><dt>Type</dt><dd>Fraunces, Hanken Grotesk, JetBrains Mono (<a href="assets/fonts/OFL-fraunces.txt">SIL OFL 1.1</a>)</dd></div>
+          <div><dt>Demo library</dt><dd>Music, covers and lyrics in the screenshots were made for this site and are CC0. The artists are fictional.</dd></div>
+        </dl>
+      </section>
+    </div>
+    <div class="wrap liner-base mono">
+      <p>© 2026 Resonance</p>
+      <p>No tracking. No cookies. No requests beyond this site’s own files.</p>
+    </div>
+  </footer>
+</body>
+</html>
