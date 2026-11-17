@@ -3,7 +3,7 @@
 A free hi-res music player for Windows 10 (19041+) and 11, x64.
 
 **Website:** https://senthamizhanr.github.io/resonance/
-**Download:** [Releases](https://github.com/senthamizhanR/resonance/releases/latest)
+**Download:** [Releases](https://github.com/senthamizhanR/resonance/releases)
 
 This repository holds the download website (plain HTML, CSS and JS served by GitHub Pages from the repository root) and the installer releases.
 
