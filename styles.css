@@ -208,20 +208,16 @@ section { position: relative; }
 .side-title .mono { font-style: normal; font-size: 0.72rem; letter-spacing: 0.08em; text-transform: uppercase; color: var(--ink-3); }
 .tracks { list-style: none; margin: 0; padding: 0; }
 .tracks li {
-  display: grid; grid-template-columns: 2.6rem minmax(0, auto) minmax(12px, 1fr) auto; align-items: baseline;
-  column-gap: 10px; padding: 16px 0 14px; border-bottom: 1px solid var(--line);
+  display: grid; grid-template-columns: minmax(0, 1fr) auto; align-items: baseline;
+  column-gap: 16px; padding: 18px 0 16px; border-bottom: 1px solid var(--line);
 }
 .t-no { font-size: 0.78rem; color: var(--ink-3); transition: color 120ms ease-out; }
 .t-name { font-family: var(--display); font-weight: 420; font-size: clamp(1.12rem, 1rem + 0.45vw, 1.42rem); line-height: 1.2; letter-spacing: -0.012em; font-variation-settings: "SOFT" 30; }
 .t-lead { border-bottom: 1px dotted var(--line-2); transform: translateY(-0.3em); min-width: 12px; }
-.t-tag { font-size: 0.74rem; color: var(--ink-2); white-space: nowrap; }
-.t-ok { color: var(--ok); }
-.t-desc { grid-column: 2 / -1; color: var(--ink-3); font-size: 0.93rem; margin-top: 4px; }
-.tracks li:hover .t-no { color: var(--rose); }
-@media (max-width: 479px) {
-  .tracks li { grid-template-columns: 2.1rem minmax(0, 1fr) auto; }
-  .t-lead { display: none; }
-}
+.t-tag { font-family: var(--text); font-weight: 600; font-size: 0.78rem; color: var(--ink-2); white-space: nowrap; padding: 3px 10px; border-radius: 6px; background: rgb(242 238 232 / 0.06); border: 1px solid var(--line); }
+.t-ok { color: var(--ok); border-color: rgb(91 214 160 / 0.35); background: rgb(91 214 160 / 0.08); }
+.t-desc { grid-column: 1 / -1; color: var(--ink-3); font-size: 0.95rem; margin-top: 6px; }
+.tracks li:hover .t-name { color: #fff; }
 
 /* ---------- Signal flow ---------- */
 .signal-head { display: grid; gap: 18px; margin-bottom: clamp(40px, 5vw, 72px); }
@@ -266,10 +262,12 @@ section { position: relative; }
 .spread-grid { display: grid; grid-template-columns: minmax(0, 1fr); position: relative; }
 .spread-word {
   font-family: var(--display); font-style: italic; font-weight: 300; font-variation-settings: "SOFT" 100, "WONK" 1;
-  font-size: clamp(5.5rem, 1rem + 22vw, 24rem); line-height: 0.8; letter-spacing: -0.05em; color: transparent;
-  -webkit-text-stroke: 1px rgb(242 238 232 / 0.34); white-space: nowrap; user-select: none; margin-left: -0.04em;
+  font-size: clamp(5.5rem, 1rem + 22vw, 24rem); line-height: 0.86; letter-spacing: -0.05em; white-space: nowrap; user-select: none; margin-left: -0.04em;
+  /* a faint gradient fill, not an outline: text-stroke on a variable font draws its overlapping contours in Edge/Chrome */
+  background: linear-gradient(100deg, rgb(123 63 242 / 0.30), rgb(192 75 192 / 0.20) 55%, rgb(242 85 122 / 0.26));
+  -webkit-background-clip: text; background-clip: text; color: transparent; padding-right: 0.1em;
 }
-.spread-word span { -webkit-text-stroke: 0; color: var(--rose); }
+.spread-word span { color: var(--rose); -webkit-text-fill-color: var(--rose); }
 .spread-text { max-width: 30rem; margin-top: clamp(18px, 3vw, 30px); position: relative; z-index: 2; }
 .spread-text h2 { font-size: clamp(1.9rem, 1.2rem + 2.6vw, 3.4rem); margin-bottom: 18px; }
 .spread-text p { color: var(--ink-2); }
@@ -455,3 +453,16 @@ section { position: relative; }
   .flow-wire .pulse { display: none; }
   .download .disc, .download.in .disc { transform: translateX(42%); }
 }
+
+/* ---------- 2026-11-17 revision: no index nav, no kickers or captions, no mono labels ---------- */
+.masthead-cta { margin-left: auto; }
+.mono { font-family: var(--text); font-variant-numeric: tabular-nums; }
+.node-k { font-family: var(--text); text-transform: none; letter-spacing: 0; font-size: 0.8rem; font-weight: 600; color: var(--ink-3); }
+.node-v { font-family: var(--text); font-weight: 600; }
+.cta-meta, .liner-base, .hash-k, .sleeve-sub { font-family: var(--text); letter-spacing: 0; text-transform: none; }
+.hash-k { font-weight: 600; font-size: 0.85rem; color: var(--ink-2); }
+.specs dt, .credits dt { font-family: var(--text); font-weight: 600; font-size: 0.85rem; letter-spacing: 0; text-transform: none; }
+.liner-credits h2 { font-family: var(--display); font-style: italic; font-weight: 420; font-size: 1.6rem; letter-spacing: -0.02em; text-transform: none; color: #17161A; font-variation-settings: "SOFT" 100, "WONK" 1; }
+.disc-v { font-style: normal; font-family: var(--text); font-size: 0.6em; opacity: 0.85; }
+.index-list li { grid-template-columns: minmax(0, 1fr); }
+.win-list dt { display: block; }
