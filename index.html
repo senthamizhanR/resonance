@@ -3,8 +3,8 @@
 <head>
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
-  <title>Resonance — hi-res music player for Windows</title>
-  <meta name="description" content="Resonance is a free hi-res music player for Windows 10 and 11: a 64-bit float engine, WASAPI exclusive and ASIO output, bit-perfect playback and a signal path that tells the truth.">
+  <title>Resonance — hi-res music player for Windows and Android</title>
+  <meta name="description" content="Resonance is a free hi-res music player for Windows and Android: a 64-bit float engine, bit-perfect output to your DAC, and a signal path that tells the truth.">
   <meta name="color-scheme" content="dark">
   <meta name="theme-color" content="#0E0F12">
 
@@ -13,7 +13,7 @@
   <link rel="canonical" href="https://senthamizhanr.github.io/resonance/">
   <meta property="og:type" content="website">
   <meta property="og:title" content="Resonance — every bit, as it was recorded">
-  <meta property="og:description" content="A free hi-res music player for Windows 10 and 11. 64-bit float engine, WASAPI exclusive and ASIO, bit-perfect playback.">
+  <meta property="og:description" content="A free hi-res music player for Windows and Android. 64-bit float engine, bit-perfect playback, gapless.">
   <meta property="og:image" content="https://senthamizhanr.github.io/resonance/assets/og-image.jpg">
   <meta property="og:image:width" content="1200">
   <meta property="og:image:height" content="630">
@@ -35,6 +35,8 @@
 <body>
   <svg width="0" height="0" class="sprite" aria-hidden="true" focusable="false">
     <symbol id="i-download" viewBox="0 0 24 24"><path d="M12 4v11m0 0-4.5-4.5M12 15l4.5-4.5M5 19.5h14"/></symbol>
+    <symbol id="i-pc" viewBox="0 0 24 24"><rect x="3" y="4.5" width="18" height="12" rx="2"/><path d="M9 20h6M12 16.5V20"/></symbol>
+    <symbol id="i-phone" viewBox="0 0 24 24"><rect x="6.5" y="2.5" width="11" height="19" rx="2.5"/><path d="M10.5 18.5h3"/></symbol>
     <symbol id="i-copy" viewBox="0 0 24 24"><rect x="8" y="8" width="12" height="12" rx="2.5"/><path d="M16 8V6a2 2 0 0 0-2-2H6a2 2 0 0 0-2 2v8a2 2 0 0 0 2 2h2"/></symbol>
     <symbol id="i-check" viewBox="0 0 24 24"><path d="m5 12.5 4.5 4.5L19 7.5"/></symbol>
     <symbol id="i-info" viewBox="0 0 24 24"><circle cx="12" cy="12" r="9"/><path d="M12 11v5.5M12 7.6v.2"/></symbol>
@@ -57,7 +59,7 @@
         <span>Resonance</span>
       </a>
 
-      <a class="btn btn-solid btn-sm masthead-cta" href="https://github.com/senthamizhanR/resonance/releases/download/v0.4.0/Resonance-Setup-0.4.0.exe" data-download download>
+      <a class="btn btn-solid btn-sm masthead-cta" href="#download">
         <svg class="icon" aria-hidden="true"><use href="#i-download"/></svg>Get it
       </a>
     </div>
@@ -85,11 +87,17 @@
         <div class="hero-note">
           <p class="lede">Resonance is a free player for people who care what reaches their ears. A <b>64-bit float</b> engine, <b>bit-perfect</b> output when your device allows it, and a quiet window where the album art is the only colour.</p>
           <div class="cta">
-            <a class="btn btn-solid btn-lg" href="https://github.com/senthamizhanR/resonance/releases/download/v0.4.0/Resonance-Setup-0.4.0.exe" data-download download>
-              <svg class="icon" aria-hidden="true"><use href="#i-download"/></svg>
-              Download for Windows
-            </a>
-            <p class="cta-meta"><span>v<span data-version>0.4.0</span></span> <span><span data-size>98.1 MB</span></span> <span>Windows 10/11 · x64</span> <span>Free</span></p>
+            <div class="cta-row">
+              <a class="btn btn-solid btn-lg" href="https://github.com/senthamizhanR/resonance/releases/download/v0.4.0/Resonance-Setup-0.4.0.exe" data-dl="windows" download>
+                <svg class="icon" aria-hidden="true"><use href="#i-pc"/></svg>
+                Download for Windows
+              </a>
+              <a class="btn btn-ghost btn-lg" href="apk/Resonance-0.4.4.apk" data-dl="android" download>
+                <svg class="icon" aria-hidden="true"><use href="#i-phone"/></svg>
+                Download for Android
+              </a>
+            </div>
+            <p class="cta-meta"><span>Free</span> <span>Windows 10/11 · x64</span> <span>Android 12+</span></p>
             <p class="os-note" role="status" hidden><svg class="icon" aria-hidden="true"><use href="#i-info"/></svg><span class="os-note-text"></span></p>
           </div>
         </div>
@@ -114,12 +122,12 @@
           <div class="side">
             <h3 class="side-title">The engine</h3>
             <ol class="tracks">
-              <li><span class="t-name">In-process FFmpeg decoding</span><span class="t-tag">FFmpeg 8.1</span><span class="t-desc">No external codecs and no helper processes.</span></li>
+              <li><span class="t-name">Native, in-process decoding</span><span class="t-tag">no helpers</span><span class="t-desc">FFmpeg on Windows, native decoders on Android. No external codecs.</span></li>
               <li><span class="t-name">A 64-bit float pipeline</span><span class="t-tag">f64</span><span class="t-desc">Every stage, from decode to output, in double precision.</span></li>
-              <li><span class="t-name">WASAPI shared and exclusive, plus ASIO</span><span class="t-tag">3 paths</span><span class="t-desc">Pick the route to your DAC.</span></li>
+              <li><span class="t-name">Your route to the DAC</span><span class="t-tag">exclusive</span><span class="t-desc">WASAPI shared, exclusive or ASIO on Windows. Bit-perfect USB on Android 14 and later.</span></li>
               <li><span class="t-name">Bit-perfect, when the device allows</span><span class="t-tag t-ok">bit-perfect</span><span class="t-desc">And a readout that only says so when it’s true.</span></li>
               <li><span class="t-name">Gapless playback, sample-accurate seeking</span><span class="t-tag">gapless</span><span class="t-desc">Live albums and continuous mixes flow on.</span></li>
-              <li><span class="t-name">FLAC, ALAC, WAV, AIFF, DSD, MP3, AAC</span><span class="t-tag">7 formats</span><span class="t-desc">DSD plays as PCM.</span></li>
+              <li><span class="t-name">FLAC, ALAC, WAV, AIFF, DSD, MP3, AAC, Opus</span><span class="t-tag">8 formats</span><span class="t-desc">DSD plays as PCM.</span></li>
             </ol>
           </div>
           <div class="side side--b">
@@ -258,21 +266,28 @@
       </div>
     </section>
 
-    <!-- ======================= WINDOWS ======================= -->
-    <section class="windows" aria-labelledby="windows-title">
-      <div class="wrap win-grid">
-        <h2 id="windows-title" class="win-title">At home <em>on Windows.</em></h2>
-        <dl class="win-list">
-          <div><dt>Media overlay &amp; keys</dt><dd>What’s playing, with its artwork, in the Windows media flyout. Hardware media keys just work.</dd></div>
-          <div><dt>Taskbar buttons</dt><dd>Previous, play/pause and next on the thumbnail.</dd></div>
-          <div><dt>Jump list</dt><dd>Right-click the taskbar icon for quick actions.</dd></div>
-          <div><dt>Verified updates</dt><dd>The in-app updater checks every installer’s SHA-256 before it runs.</dd></div>
-        </dl>
-        <figure class="win-shot">
-          <img src="assets/shots/windows-settings-720.webp" srcset="assets/shots/windows-settings-720.webp 720w, assets/shots/windows-settings-1440.webp 1440w"
-               sizes="(min-width: 1000px) 40vw, 100vw" width="1440" height="920" loading="lazy" decoding="async"
-               alt="Settings: the demo music folder, and the Windows toggles for media overlay and keys, track-change notifications and restoring the queue.">
-        </figure>
+    <!-- ======================= PLATFORMS ======================= -->
+    <section class="windows platforms" aria-labelledby="platforms-title">
+      <div class="wrap plat-grid">
+        <h2 id="platforms-title" class="win-title">At home <em>on your desk, and in your pocket.</em></h2>
+        <div class="plat">
+          <h3 class="plat-name"><svg class="icon" aria-hidden="true"><use href="#i-pc"/></svg>Windows</h3>
+          <dl class="win-list">
+            <div><dt>Media overlay &amp; keys</dt><dd>What’s playing, with its artwork, in the Windows media flyout. Hardware media keys just work.</dd></div>
+            <div><dt>Taskbar buttons</dt><dd>Previous, play/pause and next on the thumbnail.</dd></div>
+            <div><dt>Jump list</dt><dd>Right-click the taskbar icon for quick actions.</dd></div>
+            <div><dt>Verified updates</dt><dd>The in-app updater checks every installer’s SHA-256 before it runs.</dd></div>
+          </dl>
+        </div>
+        <div class="plat">
+          <h3 class="plat-name"><svg class="icon" aria-hidden="true"><use href="#i-phone"/></svg>Android</h3>
+          <dl class="win-list">
+            <div><dt>Bit-perfect over USB</dt><dd>On Android 14 and later, a USB DAC gets the file’s own samples at its own rate.</dd></div>
+            <div><dt>Lock screen &amp; headset</dt><dd>Notification and lock-screen controls, Bluetooth and wired buttons, Android Auto.</dd></div>
+            <div><dt>Widgets</dt><dd>Four home-screen sizes, from a slim strip to full album art.</dd></div>
+            <div><dt>Record view</dt><dd>Slide the disc out of its sleeve, then turn it to scrub.</dd></div>
+          </dl>
+        </div>
       </div>
     </section>
 
@@ -280,46 +295,73 @@
     <section class="download" id="download" aria-labelledby="download-title">
       <div class="wrap dl-grid">
         <div class="record" aria-hidden="true">
-          <div class="disc"><span class="disc-label"><span>Resonance</span><span class="disc-v">v0.4.0</span></span></div>
+          <div class="disc"><span class="disc-label"><span>Resonance</span><span class="disc-v">v0.4</span></span></div>
           <div class="sleeve">
             <img src="assets/brand-mark.svg" width="120" height="120" alt="">
             <span class="sleeve-title">Resonance</span>
-            <span class="sleeve-sub">Hi-res music player · Windows</span>
+            <span class="sleeve-sub">Hi-res music player · Windows · Android</span>
           </div>
         </div>
 
         <div class="dl-info">
           <h2 id="download-title">Take it home.</h2>
-          <p class="dl-sub">Free. Version <span data-version>0.4.0</span>, for Windows 10 and 11 on x64.</p>
-
-          <a class="btn btn-solid btn-xl" href="https://github.com/senthamizhanR/resonance/releases/download/v0.4.0/Resonance-Setup-0.4.0.exe" data-download download>
-            <svg class="icon" aria-hidden="true"><use href="#i-download"/></svg>
-            <span>Download <span class="nowrap">Resonance-Setup-<span data-version>0.4.0</span>.exe</span></span>
-          </a>
-          <p class="cta-meta"><span data-size>98.1 MB</span> <span>Windows 10/11 · x64</span> <span>No admin rights</span></p>
+          <p class="dl-sub">Free, for Windows and Android. Same engine, same sound.</p>
           <p class="os-note" role="status" hidden><svg class="icon" aria-hidden="true"><use href="#i-info"/></svg><span class="os-note-text"></span></p>
 
-          <div class="hash">
-            <p class="hash-k" id="sha-label">SHA-256</p>
-            <div class="hash-row">
-              <code id="sha256" aria-labelledby="sha-label">c4ac84117b65a674655ca6e43a2c841fcee2b1cb4e2a283499a9cc3f44733f12</code>
-              <button class="btn btn-ghost copy-btn" type="button" data-copy-target="sha256">
-                <svg class="icon icon-copy" aria-hidden="true"><use href="#i-copy"/></svg>
-                <svg class="icon icon-check" aria-hidden="true"><use href="#i-check"/></svg>
-                <span class="copy-label">Copy</span>
-              </button>
+          <div class="edition" id="get-windows">
+            <h3 class="plat-name"><svg class="icon" aria-hidden="true"><use href="#i-pc"/></svg>Windows</h3>
+            <a class="btn btn-solid btn-xl" href="https://github.com/senthamizhanR/resonance/releases/download/v0.4.0/Resonance-Setup-0.4.0.exe" data-dl="windows" download>
+              <svg class="icon" aria-hidden="true"><use href="#i-download"/></svg>
+              <span>Download <span class="nowrap">Resonance-Setup-<span data-version="windows">0.4.0</span>.exe</span></span>
+            </a>
+            <p class="cta-meta"><span data-size="windows">98.1 MB</span> <span>Windows 10/11 · x64</span> <span>No admin rights</span></p>
+            <div class="hash">
+              <p class="hash-k" id="sha-label-windows">SHA-256</p>
+              <div class="hash-row">
+                <code id="sha256-windows" aria-labelledby="sha-label-windows">c4ac84117b65a674655ca6e43a2c841fcee2b1cb4e2a283499a9cc3f44733f12</code>
+                <button class="btn btn-ghost copy-btn" type="button" data-copy-target="sha256-windows">
+                  <svg class="icon icon-copy" aria-hidden="true"><use href="#i-copy"/></svg>
+                  <svg class="icon icon-check" aria-hidden="true"><use href="#i-check"/></svg>
+                  <span class="copy-label">Copy</span>
+                </button>
+              </div>
+              <p class="hash-hint">Check it in PowerShell: <code>Get-FileHash .\Resonance-Setup-0.4.0.exe</code></p>
             </div>
-            <p class="hash-hint">Check it in PowerShell: <code>Get-FileHash .\Resonance-Setup-0.4.0.exe</code></p>
-            <p class="visually-hidden" aria-live="polite" id="copy-status"></p>
+            <dl class="specs">
+              <div><dt>Requires</dt><dd>Windows 10 version 2004 (build 19041) or later, or Windows 11, on a 64-bit PC.</dd></div>
+              <div><dt>Output</dt><dd>Any WASAPI device; an ASIO driver for ASIO.</dd></div>
+              <div><dt>Installs</dt><dd>Per user, for your account only. No admin rights needed.</dd></div>
+            </dl>
+            <p class="smartscreen"><b>Windows SmartScreen may warn you</b> because the installer isn’t code-signed yet. Choose <b>More info</b>, then <b>Run anyway</b>. Compare the SHA-256 above first if you’d like to be sure.</p>
           </div>
 
-          <dl class="specs">
-            <div><dt>Requires</dt><dd>Windows 10 version 2004 (build 19041) or later, or Windows 11, on a 64-bit PC.</dd></div>
-            <div><dt>Output</dt><dd>Any WASAPI device; an ASIO driver for ASIO.</dd></div>
-            <div><dt>Installs</dt><dd>Per user, for your account only. No admin rights needed.</dd></div>
-          </dl>
-
-          <p class="smartscreen"><b>Windows SmartScreen may warn you</b> because the installer isn’t code-signed yet. Choose <b>More info</b>, then <b>Run anyway</b>. Compare the SHA-256 above first if you’d like to be sure.</p>
+          <div class="edition" id="get-android">
+            <h3 class="plat-name"><svg class="icon" aria-hidden="true"><use href="#i-phone"/></svg>Android</h3>
+            <a class="btn btn-solid btn-xl" href="apk/Resonance-0.4.4.apk" data-dl="android" download>
+              <svg class="icon" aria-hidden="true"><use href="#i-download"/></svg>
+              <span>Download <span class="nowrap">Resonance-<span data-version="android">0.4.4</span>.apk</span></span>
+            </a>
+            <p class="cta-meta"><span data-size="android">5.8 MB</span> <span>Android 12+</span> <span>Signed APK</span></p>
+            <div class="hash">
+              <p class="hash-k" id="sha-label-android">SHA-256</p>
+              <div class="hash-row">
+                <code id="sha256-android" aria-labelledby="sha-label-android">2df5ca193b27b0621a9a40b932378fec17383e189b6eb43f4d9bb100bcb3aa8a</code>
+                <button class="btn btn-ghost copy-btn" type="button" data-copy-target="sha256-android">
+                  <svg class="icon icon-copy" aria-hidden="true"><use href="#i-copy"/></svg>
+                  <svg class="icon icon-check" aria-hidden="true"><use href="#i-check"/></svg>
+                  <span class="copy-label">Copy</span>
+                </button>
+              </div>
+              <p class="hash-hint">Check it on a PC: <code>Get-FileHash .\Resonance-0.4.4.apk</code></p>
+            </div>
+            <dl class="specs">
+              <div><dt>Requires</dt><dd>Android 12 or later, on a phone or tablet.</dd></div>
+              <div><dt>Output</dt><dd>Speaker, wired, Bluetooth, or a USB DAC (bit-perfect on Android 14 and later).</dd></div>
+              <div><dt>Installs</dt><dd>Straight from the APK. No account and no store.</dd></div>
+            </dl>
+            <p class="smartscreen smartscreen--android"><b>Your phone will ask before installing</b> because the app doesn’t come from Google Play. Allow installs from your browser when it asks, then tap <b>Install</b>. Play Protect may scan the app first.</p>
+          </div>
+          <p class="visually-hidden" aria-live="polite" id="copy-status"></p>
         </div>
       </div>
     </section>
@@ -331,7 +373,7 @@
       <div class="liner-about">
         <p class="liner-mark"><img src="assets/brand-mark.svg" width="44" height="44" alt=""><span>Resonance</span></p>
         <h2 class="visually-hidden">About</h2>
-        <p>Resonance is a hi-res music player for Windows, built as a listening room rather than a file manager. It exists because a player should tell you what it’s doing to your music, and otherwise get out of the way. Your library stays on your PC, and lyrics never come from the internet.</p>
+        <p>Resonance is a hi-res music player for Windows and Android, built as a listening room rather than a file manager. It exists because a player should tell you what it’s doing to your music, and otherwise get out of the way. Your library stays on your device, and lyrics never come from the internet.</p>
         <!-- Author line: change it here only. -->
         <p class="author" id="author">Made by <a href="https://github.com/senthamizhanR" rel="author">Senthamizhan R</a></p>
       </div>
@@ -340,9 +382,10 @@
         <h2 id="credits-title">Liner notes</h2>
         <dl class="credits">
           <div><dt>Decoding</dt><dd><a href="https://ffmpeg.org/">FFmpeg 8.1</a> (<a href="https://www.gnu.org/licenses/old-licenses/lgpl-2.1.html">LGPL 2.1</a>, <a href="https://github.com/BtbN/FFmpeg-Builds">BtbN builds</a>) · <a href="https://github.com/Ruslan-B/FFmpeg.AutoGen">FFmpeg.AutoGen</a></dd></div>
+          <div><dt>Android</dt><dd><a href="https://developer.android.com/compose">Jetpack Compose</a> · <a href="https://developer.android.com/media/media3">Media3</a> · AAudio · <a href="https://github.com/mackron/dr_libs">dr_libs</a> (public domain) · <a href="https://github.com/macosforge/alac">Apple ALAC</a> (Apache 2.0)</dd></div>
           <div><dt>ASIO host</dt><dd><a href="https://github.com/naudio/NAudio">NAudio</a></dd></div>
           <div><dt>Visualizers</dt><dd><a href="https://github.com/microsoft/Win2D">Win2D</a></dd></div>
-          <div><dt>Interface</dt><dd><a href="https://github.com/microsoft/WindowsAppSDK">Windows App SDK / WinUI 3</a> · <a href="https://github.com/CommunityToolkit/dotnet">CommunityToolkit.Mvvm</a></dd></div>
+          <div><dt>Windows UI</dt><dd><a href="https://github.com/microsoft/WindowsAppSDK">Windows App SDK / WinUI 3</a> · <a href="https://github.com/CommunityToolkit/dotnet">CommunityToolkit.Mvvm</a></dd></div>
           <div><dt>Runtime</dt><dd><a href="https://dotnet.microsoft.com/">.NET 8</a></dd></div>
           <div><dt>Installer</dt><dd><a href="https://jrsoftware.org/isinfo.php">Inno Setup</a></dd></div>
           <div><dt>Glyphs</dt><dd><a href="https://learn.microsoft.com/windows/apps/design/style/segoe-fluent-icons-font">Segoe Fluent Icons</a> (Microsoft)</dd></div>

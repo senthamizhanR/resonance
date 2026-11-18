@@ -2,12 +2,22 @@
 (() => {
   'use strict';
 
-  // ---- Config: the installer is a GitHub Release asset (GitHub Pages can't hold it). ----
+  // ---- Config, one entry per platform. ----
+  // Windows: a GitHub Release asset (98 MiB is too big for the Pages repo).
+  // Android: the APK is small enough to live in this repo, served by Pages from apk/.
   const CONFIG = {
-    version: '0.4.0',
-    downloadUrl: 'https://github.com/senthamizhanR/resonance/releases/download/v0.4.0/Resonance-Setup-0.4.0.exe',
-    sizeBytes: 102888448,
-    sha256: 'c4ac84117b65a674655ca6e43a2c841fcee2b1cb4e2a283499a9cc3f44733f12',
+    windows: {
+      version: '0.4.0',
+      downloadUrl: 'https://github.com/senthamizhanR/resonance/releases/download/v0.4.0/Resonance-Setup-0.4.0.exe',
+      sizeBytes: 102888448,
+      sha256: 'c4ac84117b65a674655ca6e43a2c841fcee2b1cb4e2a283499a9cc3f44733f12',
+    },
+    android: {
+      version: '0.4.4',
+      downloadUrl: 'apk/Resonance-0.4.4.apk',
+      sizeBytes: 6130223,
+      sha256: '2df5ca193b27b0621a9a40b932378fec17383e189b6eb43f4d9bb100bcb3aa8a',
+    },
   };
 
   const $ = (s, r = document) => r.querySelector(s);
@@ -15,11 +25,12 @@
   const reduceMq = matchMedia('(prefers-reduced-motion: reduce)');
 
   // ---- Download links, version, size, hash ----
-  const sizeText = (CONFIG.sizeBytes / 1048576).toFixed(1) + ' MB';
-  $$('[data-download]').forEach(a => { a.href = CONFIG.downloadUrl; });
-  $$('[data-version]').forEach(el => { el.textContent = CONFIG.version; });
-  $$('[data-size]').forEach(el => { el.textContent = sizeText; });
-  const shaEl = $('#sha256'); if (shaEl) shaEl.textContent = CONFIG.sha256;
+  Object.entries(CONFIG).forEach(([key, c]) => {
+    $$(`[data-dl="${key}"]`).forEach(a => { a.href = c.downloadUrl; });
+    $$(`[data-version="${key}"]`).forEach(el => { el.textContent = c.version; });
+    $$(`[data-size="${key}"]`).forEach(el => { el.textContent = (c.sizeBytes / 1048576).toFixed(1) + ' MB'; });
+    const shaEl = $(`#sha256-${key}`); if (shaEl) shaEl.textContent = c.sha256;
+  });
 
   // ---- Mobile navigation ----
   const toggle = $('.menu-toggle'), navList = $('#nav-list');
@@ -32,7 +43,7 @@
     matchMedia('(min-width: 900px)').addEventListener('change', e => { if (e.matches) setOpen(false); });
   }
 
-  // ---- Windows-only note (user agent; silent when unsure) ----
+  // ---- Platform: lead with the visitor's own download (user agent; silent when unsure) ----
   function detectOS() {
     const p = (navigator.userAgentData && navigator.userAgentData.platform) || '';
     const ua = navigator.userAgent || '';
@@ -46,9 +57,19 @@
   }
   try {
     const os = detectOS();
-    if (os && os !== 'windows') {
+    if (os === 'Android') {
+      // Android button becomes the solid one and goes first; the Android edition leads the download section.
+      const row = $('.cta-row');
+      if (row) {
+        const win = $('[data-dl="windows"]', row), and = $('[data-dl="android"]', row);
+        win.classList.replace('btn-solid', 'btn-ghost'); and.classList.replace('btn-ghost', 'btn-solid');
+        row.prepend(and);
+      }
+      const ed = $('#get-android'), first = $('#get-windows');
+      if (ed && first) first.before(ed);
+    } else if (os && os !== 'windows' && os !== 'ChromeOS') {
       const name = os === 'iOS' ? 'an iPhone or iPad' : os;
-      const msg = `It looks like you’re on ${name}. Resonance runs on Windows 10 and 11 (x64) only, but you’re welcome to download the installer for a Windows PC.`;
+      const msg = `It looks like you’re on ${name}. Resonance is for Windows PCs and Android phones and tablets, so there’s no version for ${name} yet.`;
       $$('.os-note').forEach(n => { $('.os-note-text', n).textContent = msg; n.hidden = false; });
     }
   } catch (_) { /* no note is the graceful fallback */ }
@@ -77,7 +98,7 @@
   });
 
   // ---- Reveal on scroll (content stays visible without JS or with reduced motion) ----
-  const revealSel = '.sec-head, .side, .signal-head, .flow, .spread-text, .spread-shot, .room-head, .room-shot, .room-copy, .viz-head, .c, .lib-head, .lyric, .lib-shot, .index-list, .win-title, .win-list, .win-shot';
+  const revealSel = '.sec-head, .side, .signal-head, .flow, .spread-text, .spread-shot, .room-head, .room-shot, .room-copy, .viz-head, .c, .lib-head, .lyric, .lib-shot, .index-list, .win-title, .plat, .edition';
   const reveals = $$(revealSel);
   if ('IntersectionObserver' in window) {
     reveals.forEach(el => el.classList.add('rv'));

@@ -466,3 +466,19 @@ section { position: relative; }
 .disc-v { font-style: normal; font-family: var(--text); font-size: 0.6em; opacity: 0.85; }
 .index-list li { grid-template-columns: minmax(0, 1fr); }
 .win-list dt { display: block; }
+
+/* ---- Two platforms: Windows and Android ---- */
+.cta-row { display: flex; flex-wrap: wrap; gap: 10px; }
+@media (max-width: 479px) { .cta-row .btn { width: 100%; } }
+.plat-name { display: flex; align-items: center; gap: 10px; font-family: var(--text); font-weight: 600; font-size: 0.95rem; color: var(--ink-2); margin: 0 0 6px; }
+.plat-name .icon { width: 20px; height: 20px; color: var(--violet); }
+.plat-grid { display: grid; grid-template-columns: minmax(0, 1fr); gap: clamp(28px, 4vw, 44px); }
+.plat .win-list { grid-template-columns: minmax(0, 1fr); }
+@media (min-width: 860px) {
+  .plat-grid { grid-template-columns: repeat(2, minmax(0, 1fr)); column-gap: clamp(32px, 5vw, 72px); }
+  .plat-grid .win-title { grid-column: 1 / -1; max-width: 16ch; }
+}
+.edition { margin-top: clamp(34px, 4vw, 48px); padding-top: clamp(26px, 3vw, 34px); border-top: 1px solid var(--line-2); }
+.edition .plat-name { margin-bottom: 16px; }
+.dl-info > .os-note { margin-top: 18px; }
+.smartscreen--android { border-left-color: var(--violet); background: rgb(123 63 242 / 0.08); }

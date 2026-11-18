@@ -1,6 +1,4 @@
-# downloads/ holds a copy of the installer for the local mock only. Do not commit it.
-# GitHub blocks files over 100 MiB and warns above 50 MiB; this installer is
-# 102,888,448 bytes (98.1 MiB), right at that limit, and binaries bloat a Pages repo.
-# The real download must be a GitHub Release asset: point CONFIG.downloadUrl in
-# app.js (and the fallback hrefs in index.html) at the release URL when hosting is decided.
+# downloads/ holds a copy of the Windows installer for the local mock only. Do not commit it.
+# GitHub blocks files over 100 MiB; the 98.1 MiB installer is a GitHub Release asset instead.
+# The Android APK (about 6 MB) is small enough to live in apk/ and is served by Pages.
 downloads/
